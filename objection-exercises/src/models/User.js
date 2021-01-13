@@ -1,4 +1,5 @@
 const BaseModel = require('./BaseModel')
+const { HasManyRelation } = require('objection')
 
 class User extends BaseModel {
   static get tableName() {
@@ -6,7 +7,19 @@ class User extends BaseModel {
   }
 
   static get relationMappings() {
-    return {}
+    const Pet = require('./Pet')
+    return {
+      pet: {
+        relation: HasManyRelation,
+        modelClass: Pet,
+        join: {
+          from: 'users.id',
+          to: 'pets.ownerId'
+        }
+      }
+
+      
+    }
   }
 }
 
